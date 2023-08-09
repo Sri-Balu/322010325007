@@ -3,9 +3,8 @@ const axios = require('axios');
 
 const app = express();
 const port = 3000;
-const timeout = 500; // Timeout in milliseconds
+const timeout = 500;
 
-// Route to get unique integers from provided URLs in ascending order
 app.get('/numbers', async (req, res) => {
     try {
         const { url } = req.query;
@@ -14,7 +13,7 @@ app.get('/numbers', async (req, res) => {
             return res.status(400).json({ error: 'Please provide at least one URL' });
         }
 
-        const urls = Array.isArray(url) ? url : [url]; // Ensure it's an array
+        const urls = Array.isArray(url) ? url : [url]; 
 
         const fetchPromises = urls.map(async url => {
             try {
@@ -28,10 +27,9 @@ app.get('/numbers', async (req, res) => {
 
         const results = await Promise.all(fetchPromises);
 
-        // Combine and deduplicate numbers from all responses into a single array
         const combinedNumbers = Array.from(new Set(results.flat()));
 
-        // Sort the combined numbers in ascending order
+      
         combinedNumbers.sort((a, b) => a - b);
 
         res.json({ numbers: combinedNumbers });
